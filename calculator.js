@@ -30,6 +30,7 @@ function evaluatePostFix(postFix) {
 	const resultStack = [];
 	for (let i = 0; i < postFix.length; i++) {
 		const ele = postFix[i];
+
 		if (!isNaN(parseFloat(ele))) {
 			resultStack.push(ele);
 		} else {
@@ -37,11 +38,11 @@ function evaluatePostFix(postFix) {
 			const operand2 = parseFloat(resultStack.pop());
 
 			const calculatedValue = operation(ele, operand1, operand2);
-
 			resultStack.push(calculatedValue);
 		}
 	}
 	if (resultStack.length > 1 || isNaN(resultStack[resultStack.length - 1])) {
+		console.log(resultStack);
 		console.error("check your expression");
 		return null;
 	}
@@ -50,29 +51,30 @@ function evaluatePostFix(postFix) {
 }
 
 function convertToPostFix(expression) {
-	console.log(expression);
 	let outputArray = [];
 	let operatorArray = [];
 	let number = "";
 	for (let i = 0; i < expression.length; i++) {
 		const char = expression[i];
 
-		if (!isNaN(parseFloat(char)) || char === ".") {
+		if (!isNaN(parseFloat(char)) || char === "." || (i === 0 && char === "-")) {
 			number += char;
 		} else if (number !== "") {
-			outputArray.push(number.trim());
 			console.log(number);
+			outputArray.push(number.trim());
 			number = "";
 		}
-		if (isOperator(char)) {
+		if (isOperator(char) && i !== 0) {
 			while (
 				operatorArray.length > 0 &&
 				operatorArray[operatorArray - 1] !== "(" &&
 				checkPrecedence(operatorArray[operatorArray.length - 1]) >=
 					checkPrecedence(char)
 			) {
+				console.log(char);
 				outputArray.push(operatorArray.pop());
 			}
+			console.log(char);
 			operatorArray.push(char);
 		} else if (char === "(") {
 			operatorArray.push(char);
@@ -92,8 +94,10 @@ function convertToPostFix(expression) {
 		outputArray.push(number);
 	}
 	while (operatorArray.length > 0) {
+		console.log(operatorArray);
 		outputArray.push(operatorArray.pop());
 	}
+	console.log(outputArray);
 	return outputArray;
 }
 export function calculator(expression) {
