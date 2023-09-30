@@ -18,6 +18,8 @@ function handleButtons(e) {
 }
 function handleDelete() {
 	if (outputField.value.split("").length === 0) return;
+	if (outputField.value === "Error" || outputField.value === "Infinity")
+		return (outputField.value = "");
 	let expression = outputField.value.split("");
 	expression.pop();
 	// console.log(expression.join(""));
