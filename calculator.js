@@ -97,7 +97,7 @@ function convertToPostFix(expression) {
 	while (operatorArray.length > 0) {
 		outputArray.push(operatorArray.pop());
 	}
-	console.log(outputArray);
+
 	return outputArray;
 }
 export function calculator(expression) {
